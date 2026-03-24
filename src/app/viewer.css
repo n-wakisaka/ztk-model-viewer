@@ -1,0 +1,603 @@
+:root {
+  color-scheme: light;
+  --bg: #f3efe3;
+  --panel: rgba(255, 252, 245, 0.92);
+  --panel-strong: rgba(242, 237, 223, 0.98);
+  --stroke: #b9ab8c;
+  --ink: #2f2b22;
+  --muted: #6b6557;
+  --accent: #1f6a5e;
+  --accent-soft: #d7ece7;
+  --warning: #8a4b2a;
+  --warning-soft: rgba(138, 75, 42, 0.12);
+  --shadow: 0 18px 44px rgba(72, 55, 28, 0.14);
+  font-family:
+    'Avenir Next',
+    'Hiragino Sans',
+    'Yu Gothic',
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(191, 219, 204, 0.9), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(214, 192, 150, 0.7), transparent 24%),
+    linear-gradient(160deg, #efe7d8 0%, #f7f2e9 52%, #e7ebdf 100%);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.viewerShell {
+  height: 100%;
+  padding: 18px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 16px;
+}
+
+.topbar,
+.panel {
+  background: var(--panel);
+  border: 1px solid rgba(185, 171, 140, 0.7);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.topbar {
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: clamp(1.4rem, 2vw, 2rem);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.toolbar button,
+.panelToggle,
+.tabButton,
+.issueBadge,
+.panelHeader span {
+  border-radius: 999px;
+}
+
+.toolbar button,
+.panelToggle,
+.tabButton {
+  border: 1px solid var(--stroke);
+  background: var(--panel-strong);
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.panelActionButton {
+  border: 1px solid var(--stroke);
+  background: var(--panel-strong);
+  border-radius: 999px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.issueBadge {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(107, 101, 87, 0.18);
+  color: var(--muted);
+}
+
+.issueBadge.hasIssues {
+  background: var(--warning-soft);
+  border-color: rgba(138, 75, 42, 0.3);
+  color: var(--warning);
+}
+
+.workspace {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(320px, 0.95fr) minmax(440px, 1.7fr) minmax(320px, 0.95fr);
+  gap: 16px;
+}
+
+.column {
+  min-height: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.leftColumn,
+.rightColumn {
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.rightColumn {
+  grid-template-rows: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
+
+.panel {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.viewportPanel {
+  min-height: 0;
+}
+
+.previewPanel.isClosed {
+  grid-template-rows: auto;
+}
+
+.panelHeader {
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(185, 171, 140, 0.35);
+}
+
+.panelHeader h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.panelHeader span {
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 6px 10px;
+  font-size: 0.82rem;
+}
+
+.sourceHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panelBody {
+  min-height: 0;
+  padding: 14px 16px 16px;
+  overflow: auto;
+}
+
+.sourceBody,
+.sidePanelBody,
+.previewBody {
+  display: grid;
+  gap: 12px;
+}
+
+.sourceBody textarea,
+.previewBody textarea {
+  width: 100%;
+  min-height: 0;
+  resize: none;
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.65);
+  color: var(--ink);
+  font-family:
+    'SF Mono',
+    'Menlo',
+    'Consolas',
+    monospace;
+}
+
+.sourceBody textarea {
+  height: 100%;
+}
+
+.sourceEditor {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.sourceOverlay,
+.sourceInput {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 14px;
+  font-family:
+    'SF Mono',
+    'Menlo',
+    'Consolas',
+    monospace;
+  font-size: 1rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  tab-size: 2;
+}
+
+.sourceOverlayViewport {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.sourceInput {
+  position: relative;
+  resize: none;
+  background: rgba(255, 255, 255, 0.65);
+  color: var(--ink);
+  caret-color: var(--ink);
+  overflow: auto;
+}
+
+.sourceInput::selection {
+  background: rgba(31, 106, 94, 0.16);
+}
+
+.sourceBlockHighlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: rgba(31, 106, 94, 0.14);
+  border-top: 1px solid rgba(31, 106, 94, 0.1);
+  border-bottom: 1px solid rgba(31, 106, 94, 0.1);
+}
+
+.previewBody textarea {
+  min-height: 200px;
+}
+
+.viewportBody {
+  padding: 0;
+  min-height: 0;
+}
+
+.viewportCanvasHost {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.viewportCanvasHost canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 0 0 22px 22px;
+}
+
+.tabRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tabRow.compact .tabButton {
+  padding: 8px 12px;
+}
+
+.tabButton.isActive {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.previewMeta {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.previewState {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.82rem;
+}
+
+.previewState.isUnsupported {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.treeRoot,
+.issuesPanel,
+.inspectorPanelContent {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.treeNode + .treeNode {
+  margin-top: 8px;
+}
+
+.treeRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: start;
+}
+
+.treeChildren {
+  margin-top: 8px;
+  margin-left: 8px;
+  padding-left: 8px;
+  border-left: 1px solid rgba(107, 101, 87, 0.25);
+}
+
+.treeButton {
+  width: 100%;
+  text-align: left;
+  border: 1px solid rgba(107, 101, 87, 0.18);
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 12px;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.treeButton small {
+  color: var(--muted);
+}
+
+.treeButton.isSelected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.treePinButton {
+  border: 1px solid rgba(107, 101, 87, 0.18);
+  background: rgba(255, 255, 255, 0.58);
+  color: var(--muted);
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.treePinButton.isPinned {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.treePinIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.shapeCluster {
+  margin-top: 8px;
+  margin-left: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px;
+  border-left: 3px solid rgba(31, 106, 94, 0.22);
+  border-radius: 0 12px 12px 0;
+  background: linear-gradient(90deg, rgba(31, 106, 94, 0.08), rgba(31, 106, 94, 0.02));
+}
+
+.shapeChip {
+  border: 1px solid rgba(107, 101, 87, 0.18);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--muted);
+  border-radius: 10px;
+  padding: 5px 8px;
+  cursor: pointer;
+}
+
+.shapeChip.isSelected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.inspectorHeading {
+  display: grid;
+  gap: 4px;
+}
+
+.inspectorHeading span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.inspectorFields {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(110px, 0.8fr) 1fr;
+  gap: 8px 12px;
+  align-items: start;
+  align-content: start;
+}
+
+.inspectorFields dt {
+  color: var(--muted);
+}
+
+.inspectorFields dd {
+  margin: 0;
+  word-break: break-word;
+}
+
+.jointControlSection,
+.issueGroup {
+  padding-top: 12px;
+  border-top: 1px solid rgba(185, 171, 140, 0.4);
+}
+
+.jointControlSection h3,
+.issueGroup h3 {
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+}
+
+.jointControlRow {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.jointControlRow + .jointControlRow {
+  margin-top: 10px;
+}
+
+.jointControlRow input {
+  width: 100%;
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  padding: 9px 10px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.diagnosticList {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--warning);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.modalScrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(47, 43, 34, 0.18);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.helpModal {
+  width: min(720px, 100%);
+  max-height: min(80vh, 760px);
+  background: var(--panel);
+  border: 1px solid rgba(185, 171, 140, 0.7);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.helpModal .panelHeader {
+  padding: 12px 14px;
+}
+
+.helpModal .panelHeader h2 {
+  font-size: 0.96rem;
+}
+
+.helpBody {
+  display: grid;
+  gap: 12px;
+}
+
+.helpSection h3 {
+  margin: 0 0 8px;
+  font-size: 0.98rem;
+}
+
+.helpSection ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.helpSection li + li {
+  margin-top: 6px;
+}
+
+@media (max-width: 1280px) {
+  .workspace {
+    grid-template-columns: minmax(300px, 0.9fr) minmax(380px, 1.5fr) minmax(300px, 0.9fr);
+  }
+}
+
+@media (max-width: 1080px) {
+  body {
+    overflow: auto;
+  }
+
+  .viewerShell,
+  .workspace,
+  .column,
+  .leftColumn,
+  .rightColumn {
+    height: auto;
+  }
+
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .viewportPanel {
+    min-height: 420px;
+  }
+}
