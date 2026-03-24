@@ -1,0 +1,6 @@
+[submodule "submodules/roki-three"]
+	path = submodules/roki-three
+	url = git@github.com:n-wakisaka/roki-three.git
+[submodule "submodules/ztk-ts"]
+	path = submodules/ztk-ts
+	url = git@github.com:n-wakisaka/ztk-ts.git
